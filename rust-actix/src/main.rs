@@ -1,5 +1,7 @@
 use actix_web::{get, App, HttpServer};
 
+const PORT: u8 = 8000;
+
 #[get("/")]
 async fn index() -> String {
     "Hello World!".to_string()
@@ -7,11 +9,8 @@ async fn index() -> String {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(index)
-    })
-    .bind(("0.0.0.0", 8080))?
-    .run()
-    .await
+    HttpServer::new(|| App::new().service(index))
+        .bind(("0.0.0.0", PORT))?
+        .run()
+        .await
 }
